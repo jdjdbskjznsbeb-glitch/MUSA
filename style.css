@@ -372,6 +372,7 @@ body {
 header {
   background: rgba(20, 20, 20, 0.92);
   backdrop-filter: blur(14px);
+  position: fixed;
   border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 }
 
@@ -450,7 +451,7 @@ button:hover,
 /* Collection */
 .collection {
   padding: 120px 7%;
-  background: #f5f1eb;
+  background: #111;
 }
 
 .collection h2 {
@@ -462,64 +463,91 @@ button:hover,
 
 .products {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 34px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 32px;
   max-width: 1200px;
   margin: auto;
 }
 
 .card {
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  padding: 20px;
-  transition: 0.4s ease;
+  width: 100%;
+  background: rgba(20, 20, 20, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 28px;
+  padding: 24px;
   overflow: hidden;
   position: relative;
+  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
 }
 
 .card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.14);
+  transform: translateY(-12px);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.28);
+  border-color: rgba(201, 168, 106, 0.3);
 }
 
 .card h3,
 .card h4,
 .card p {
-  margin-left: 5px;
+  margin-left: 0;
 }
 
 .card h3 {
-  font-size: 21px;
-  margin-top: 20px;
-  margin-bottom: 8px;
+  font-size: 24px;
+  margin: 20px 0 10px;
   letter-spacing: 0.5px;
+  color: #fff;
 }
 
 .card h4 {
-  font-size: 18px;
-  margin-top: 12px;
-  letter-spacing: 1px;
-  color: #1c1c1c;
+  font-size: 20px;
+  margin: 16px 0 0;
+  letter-spacing: 0.8px;
+  color: #c9a86a;
 }
 
 .card p {
-  color: #777;
-  font-size: 14px;
-  letter-spacing: 0.5px;
+  color: #bbb;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.buy {
+  width: 100%;
+  margin-top: 24px;
+  padding: 14px 0;
+  background: #c9a86a;
+  color: #111;
+  border: none;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+}
+
+.buy:hover {
+  background: #fff;
+  color: #111;
+  transform: translateY(-2px);
+  box-shadow: 0 14px 24px rgba(0, 0, 0, 0.18);
 }
 
 /* Product image boxes */
 .box {
   width: 100%;
   height: 360px;
+  border-radius: 22px;
   background-size: cover;
   background-position: center;
-  margin-bottom: 20px;
-  transition: transform 0.6s ease;
+  margin-bottom: 22px;
+  transition: transform 0.6s ease, filter 0.4s ease;
 }
 
 .card:hover .box {
-  transform: scale(1.06);
+  transform: scale(1.05);
+  filter: brightness(0.95);
 }
 
 .box.jacket {
@@ -789,16 +817,22 @@ nav a:hover::after {
     max-width: 1200px;
     margin: auto;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 25px;
 }
 
 .collection-card {
-    height: 500px;
+    height: 460px;
     position: relative;
     background-size: cover;
     background-position: center;
     overflow: hidden;
+    border-radius: 28px;
+    box-shadow: 0 22px 50px rgba(0, 0, 0, 0.25);
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+    display: block;
+    text-decoration: none;
+    color: inherit;
 }
 
 .collection-card.men {
@@ -820,43 +854,42 @@ nav a:hover::after {
     flex-direction: column;
     justify-content: flex-end;
     align-items: center;
-    padding: 35px 20px;
-    background: linear-gradient(
-        transparent,
-        rgba(0, 0, 0, 0.75)
-    );
+    padding: 32px 24px;
+    background: linear-gradient(180deg, transparent 45%, rgba(0, 0, 0, 0.9) 100%);
 }
 
 .collection-overlay h3 {
-    font-size: 32px;
+    font-size: 34px;
     letter-spacing: 4px;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
 }
 
 .collection-overlay span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 22px;
+    border: 1px solid rgba(201, 168, 106, 0.8);
+    border-radius: 999px;
     color: #c9a86a;
-    font-size: 13px;
-    letter-spacing: 1.5px;
-}
-
-.collection-card {
-    transition: transform 0.5s ease;
+    font-size: 14px;
+    letter-spacing: 1.4px;
+    transition: all 0.3s ease;
 }
 
 .collection-card:hover {
-    transform: translateY(-8px);
-}
-.collection-overlay a {
-    color: #c9a86a;
-    text-decoration: none;
-    font-size: 13px;
-    letter-spacing: 1.5px;
-    transition: 0.3s ease;
+    transform: translateY(-10px);
+    box-shadow: 0 26px 70px rgba(0, 0, 0, 0.3);
 }
 
-.collection-overlay a:hover {
-    color: white;
-    letter-spacing: 2px;
+.collection-card:hover .collection-overlay {
+    background: linear-gradient(180deg, transparent 35%, rgba(0, 0, 0, 0.95) 100%);
+}
+
+.collection-overlay span:hover {
+    color: #fff;
+    border-color: #fff;
+    letter-spacing: 1.6px;
 }
 .hero-shop {
     display: inline-block;
@@ -876,4 +909,78 @@ nav a:hover::after {
     color: #111;
     transform: translateY(-3px);
     box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+}
+.collection-card {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.collection-card:active {
+    transform: scale(0.98);
+}
+
+.collection-card:hover .collection-overlay {
+    background: linear-gradient(
+        transparent,
+        rgba(0, 0, 0, 0.85)
+    );
+}
+.collection-card {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    cursor: pointer;
+}
+
+.collection-card:hover {
+    transform: translateY(-12px) scale(1.01);
+}
+
+.collection-card:hover .collection-overlay {
+    background: linear-gradient(
+        transparent,
+        rgba(0, 0, 0, 0.85)
+    );
+}
+
+.collection-card:active {
+    transform: scale(0.98);
+}
+.announcement-bar {
+    width: 100%;
+    background: #c9a86a;
+    color: #111;
+    text-align: center;
+    padding: 9px 15px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    position: relative;
+    z-index: 2000;
+}
+
+@media (max-width: 600px) {
+    .announcement-bar {
+        font-size: 10px;
+        padding: 8px 10px;
+        letter-spacing: 1px;
+    }
+}
+/* Announcement bar positioning */
+.announcement-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2000;
+}
+
+header {
+    top: 34px;
+}
+
+@media (max-width: 600px) {
+    header {
+        top: 30px;
+    }
 }
