@@ -27,7 +27,7 @@
 
     <h2>Checkout</h2>
 
-    <div class="checkout-box">
+    <form class="checkout-box" id"checkout-form">
 
         <h3>Delivery Information</h3>
 
@@ -41,9 +41,9 @@
 
         <input type="text" placeholder="PIN Code">
 
-        <button>Place Order</button>
+        <button type="submit">Place Order</button>
 
-    </div>
+    </form>
 
 </section>
 
@@ -57,7 +57,15 @@
     <p>© 2026 MUSA. All Rights Reserved.</p>
 
 </footer>
-
+<script>
+const checkoutForm = document.getElementById("checkout-form");
+checkoutForm.addEventListener("submit", function(event) {
+    event.preventDefault();
+    alert("Thank you for shopping with MUSA! Your order has been placed.");
+    localStorage.removeItem("cart");
+    window.location.href = "index.html";
+});
+</script>
 </body>
 
 </html>
