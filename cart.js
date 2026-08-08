@@ -27,16 +27,18 @@ function displayCart(){
                     <h3>${item.name}</h3>
 
                     <p>Price: ₹${item.price}</p>
+                    <p class="item-subtotal">
+                    Item total: ₹${item.price * (item.quantity || 1)}
+            </p>
 
-                    <p>Quantity: ${item.quantity || 1}</p>
-
+            <div class="quantity-control">
+                    <button onclick="decrease(${index})">−</button>
+                    <span>${item.quantity || 1}</span>
                     <button onclick="increase(${index})">+</button>
-
-                    <button onclick="decrease(${index})">-</button>
+            </div>
 
                     <button onclick="removeItem(${index})">Remove</button>
-
-                </div>
+             </div>
             `;
 
             cartItems.appendChild(product);
