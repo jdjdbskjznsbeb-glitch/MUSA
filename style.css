@@ -984,3 +984,41 @@ header {
         top: 30px;
     }
 }
+/* ===== MUSA PREMIUM ANNOUNCEMENT BAR ===== */
+
+.announcement-bar {
+    width: 100%;
+    background: #c9a86a;
+    color: #111;
+    text-align: center;
+    padding: 10px 15px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 2000;
+}
+
+.announcement-bar span {
+    display: inline-block;
+    animation: announcementGlow 3s ease-in-out infinite;
+}
+
+@keyframes announcementGlow {
+    0%, 100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.65;
+    }
+}
+
+@media (max-width: 600px) {
+    .announcement-bar {
+        font-size: 10px;
+        letter-spacing: 1.2px;
+        padding: 9px 10px;
+    }
+}
