@@ -858,3 +858,22 @@ nav a:hover::after {
     color: white;
     letter-spacing: 2px;
 }
+.hero-shop {
+    display: inline-block;
+    padding: 16px 38px;
+    background: #1c1c1c;
+    color: #ffffff;
+    border: 1px solid #c9a86a;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+}
+.hero-shop:hover {
+    background: #c9a86a;
+    color: #111;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+}

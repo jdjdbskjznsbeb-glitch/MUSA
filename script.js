@@ -3,7 +3,7 @@ let cart = JSON.parse(localStorage.getItem("cart")) || [];
 const buttons = document.querySelectorAll(".buy");
 const cartCount = document.getElementById("cart-count");
 
-cartCount.textContent = cart.length;
+cartCount.textContent = cart.reduce((total, item) => total + item.quantity, 0);
 
 buttons.forEach(button => {
 
