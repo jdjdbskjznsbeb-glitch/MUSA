@@ -47,3 +47,23 @@ if(existing){
     });
 
 });
+// ===== MUSA MUSIC PLAYER =====
+
+const musaMusic = document.getElementById("musa-music");
+const musicToggle = document.getElementById("music-toggle");
+
+if (musaMusic && musicToggle) {
+
+    musicToggle.addEventListener("click", () => {
+
+        if (musaMusic.paused) {
+            musaMusic.play();
+            musicToggle.textContent = "♫ MUSIC ON";
+        } else {
+            musaMusic.pause();
+            musicToggle.textContent = "♫ MUSIC OFF";
+        }
+
+    });
+
+}

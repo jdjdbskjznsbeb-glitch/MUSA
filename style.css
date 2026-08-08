@@ -2011,3 +2011,42 @@ footer {
 .hero-label:hover {
     color: #ffffff;
 }
+/* ===== MUSA MUSIC BUTTON ===== */
+
+.music-toggle {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 3000;
+
+    padding: 12px 18px;
+    background: rgba(20, 20, 20, 0.9);
+    color: #c9a86a;
+
+    border: 1px solid #c9a86a;
+    border-radius: 999px;
+
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+
+    transition: all 0.3s ease;
+}
+
+.music-toggle:hover {
+    background: #c9a86a;
+    color: #111;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 600px) {
+    .music-toggle {
+        right: 15px;
+        bottom: 15px;
+        padding: 10px 14px;
+        font-size: 10px;
+    }
+}
