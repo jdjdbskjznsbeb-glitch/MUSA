@@ -556,3 +556,19 @@ footer p {
     height: 380px;
   }
 }
+/* Premium mobile polish */
+@media (max-width: 600px) {
+  .collection {
+    padding: 70px 18px;
+  }
+
+  .collection h2 {
+    font-size: 32px;
+    letter-spacing: -0.5px;
+  }
+
+  .box {
+    height: 420px;
+    border-radius: 18px;
+  }
+}
