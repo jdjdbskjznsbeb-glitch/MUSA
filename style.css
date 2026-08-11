@@ -2093,3 +2093,4 @@ footer {
     font-weight: bold;
     letter-spacing: 4px;
 }
+body { border: 10px solid red !important; }
