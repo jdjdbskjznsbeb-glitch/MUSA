@@ -58,6 +58,19 @@
             margin-top: 20px;
             color: #1c1c1c;
         }
+
+        .order {
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .order p {
+            margin: 8px 0;
+        }
+
+        .order small {
+            color: #777;
+        }
     </style>
 </head>
 
@@ -78,7 +91,9 @@
 
     <div class="account-section">
         <strong>Orders</strong>
-        <p>Your orders will appear here.</p>
+        <div id="orders">
+            Loading orders...
+        </div>
     </div>
 
     <div class="account-section">
@@ -117,6 +132,38 @@
 
         document.getElementById("email").textContent =
             session.user.email;
+
+        const { data: orders, error } = await supabaseClient
+            .from("orders")
+            .select("*")
+            .eq("user_id", session.user.id)
+            .order("created_at", { ascending: false });
+
+        const ordersDiv = document.getElementById("orders");
+
+        if (error) {
+            console.error("Orders error:", error);
+            ordersDiv.innerHTML =
+                "<p>Could not load your orders.</p>";
+            return;
+        }
+
+        if (!orders || orders.length === 0) {
+            ordersDiv.innerHTML =
+                "<p>Your orders will appear here.</p>";
+            return;
+        }
+
+        ordersDiv.innerHTML = orders.map(order => `
+    <div class="order">
+        <strong>Order #${order.id}</strong>
+        <p>Total: ₹${order.total || 0}</p>
+        <p>Status: ${order.status || "Pending"}</p>
+        <small>
+            ${new Date(order.created_at).toLocaleString()}
+        </small>
+    </div>
+`).join("");
     }
 
     async function logOut() {
