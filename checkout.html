@@ -184,7 +184,7 @@ checkoutForm.addEventListener(
             .from("orders")
             .insert({
                 user_id: session.user.id,
-                total: totalAmount,
+                total_amount: totalAmount,
                 status: "pending",
                 full_name: fullName,
                 phone: phone,
