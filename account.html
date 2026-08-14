@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MUSA | My Account</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: #f5f1eb;
+            font-family: Arial, sans-serif;
+            color: #1c1c1c;
+        }
+
+        .account-page {
+            max-width: 600px;
+            margin: 80px auto;
+            padding: 40px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            text-align: center;
+            letter-spacing: 5px;
+        }
+
+        .welcome {
+            text-align: center;
+            color: #777;
+            margin: 20px 0 35px;
+        }
+
+        .account-section {
+            padding: 20px 0;
+            border-top: 1px solid #eee;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: #1c1c1c;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #1c1c1c;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="account-page">
+
+    <h1>MUSA</h1>
+
+    <div class="welcome" id="welcome">
+        Checking your account...
+    </div>
+
+    <div class="account-section">
+        <strong>Account</strong>
+        <p id="email"></p>
+    </div>
+
+    <div class="account-section">
+        <strong>Orders</strong>
+        <p>Your orders will appear here.</p>
+    </div>
+
+    <div class="account-section">
+        <button onclick="logOut()">Log Out</button>
+    </div>
+
+    <a href="index.html">← Back to MUSA</a>
+
+</div>
+
+<script>
+    const SUPABASE_URL =
+        "https://gepjikjasfcwvrvdpzka.supabase.co";
+
+    const SUPABASE_KEY =
+        "sb_publishable_qFY5eWE9M-g32a8uzKUNmA_Ea7R3Mxa";
+
+    const supabaseClient =
+        supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_KEY
+        );
+
+    async function loadAccount() {
+
+        const { data: { session } } =
+            await supabaseClient.auth.getSession();
+
+        if (!session) {
+            window.location.href = "login.html";
+            return;
+        }
+
+        document.getElementById("welcome").textContent =
+            "Welcome back to MUSA.";
+
+        document.getElementById("email").textContent =
+            session.user.email;
+    }
+
+    async function logOut() {
+
+        await supabaseClient.auth.signOut();
+
+        window.location.href = "index.html";
+    }
+
+    loadAccount();
+</script>
+
+</body>
+</html>

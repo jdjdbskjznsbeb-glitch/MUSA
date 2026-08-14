@@ -49,7 +49,6 @@
 <button type="submit">Place Order</button>
 
 </form>
-    </form>
 
 </section>
 
@@ -63,13 +62,129 @@
     <p>© 2026 MUSA. All Rights Reserved.</p>
 
 </footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
-const checkoutForm = document.getElementById("checkout-form");
-checkoutForm.addEventListener("submit", function(event) {
+const SUPABASE_URL =
+    "https://gepjikjasfcwvrvdpzka.supabase.co";
+
+const SUPABASE_KEY =
+    "sb_publishable_qFY5eWE9M-g32a8uzKUNmA_Ea7R3Mxa";
+
+const supabaseClient = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+const checkoutForm =
+    document.getElementById("checkout-form");
+
+checkoutForm.addEventListener("submit", async function(event) {
+
     event.preventDefault();
-    alert("Thank you for shopping with MUSA! Your order has been placed.");
+
+    const {
+        data: { session }
+    } = await supabaseClient.auth.getSession();
+
+    if (!session) {
+        alert("Please log in before placing your order.");
+        window.location.href = "login.html";
+        return;
+    }
+
+    const cart =
+        JSON.parse(localStorage.getItem("cart")) || [];
+
+    if (cart.length === 0) {
+        alert("Your cart is empty.");
+        window.location.href = "cart.html";
+        return;
+    }
+
+    const fullName =
+        document.getElementById("full-name").value.trim();
+
+    const phone =
+        document.getElementById("phone").value.trim();
+
+    const address =
+        document.getElementById("address").value.trim();
+
+    const city =
+        document.getElementById("city").value.trim();
+
+    const pin =
+        document.getElementById("pin").value.trim();
+
+    if (!fullName || !phone || !address || !city || !pin) {
+        alert("Please fill in all delivery information.");
+        return;
+    }
+
+    const totalAmount = cart.reduce(
+        (total, item) =>
+            total + Number(item.price) * (item.quantity || 1),
+        0
+    );
+
+    const { data: order, error: orderError } =
+        await supabaseClient
+            .from("orders")
+            .insert({
+                user_id: session.user.id,
+                total_amount: totalAmount,
+                status: "pending",
+                full_name: fullName,
+                phone: phone,
+                address: address,
+                city: city,
+                pin: pin
+            })
+            .select()
+            .single();
+
+    if (orderError) {
+        console.error(orderError);
+        alert("Could not create your order. Please try again.");
+        return;
+    }
+
+    const orderItems = cart.map(item => ({
+        order_id: order.id,
+        product_name: item.name,
+        quantity: item.quantity || 1,
+        price: Number(item.price)
+    }));
+
+    const { error: itemsError } =
+        await supabaseClient
+            .from("order_items")
+            .insert(orderItems);
+
+    if (itemsError) {
+    console.error("ORDER ITEMS ERROR:", itemsError);
+
+    alert(
+        "Order items error:\n" +
+        itemsError.message +
+        "\n\nDetails:\n" +
+        (itemsError.details || "None") +
+        "\n\nHint:\n" +
+        (itemsError.hint || "None")
+    );
+
+    return;
+}
+
     localStorage.removeItem("cart");
+
+    alert(
+        "Thank you for shopping with MUSA! Your order has been created."
+    );
+
     window.location.href = "index.html";
+
 });
 </script>
 </body>

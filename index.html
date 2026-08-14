@@ -19,6 +19,7 @@
     <a href="#collections">Collections</a>
     <a href="#about">About</a>
     <a href="#contact">Contact</a>
+    <a href="account.html" id="account-link">Account</a>
     <a href="cart.html">Cart (<span id="cart-count">0</span>)</a>
 </nav>
     </header>
@@ -99,7 +100,7 @@
 
     <p class="shipping-note">Free shipping on orders above ₹1999</p>
     <p class="stock-status">● In Stock</p>
-
+         
     <button class="buy">Add to Cart</button>
 </div>
 
@@ -233,5 +234,35 @@
 
 <button id="music-toggle" class="music-toggle">♫ MUSIC</button>
 <script src="script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+    const SUPABASE_URL = "https://gepjikjasfcwvrvdpzka.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_qFY5eWE9M-g32a8uzKUNmA_Ea7R3Mxa";
+
+    const supabaseClient = supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+    async function updateAccountLink() {
+        const { data: { session } } =
+            await supabaseClient.auth.getSession();
+
+        const accountLink =
+            document.getElementById("account-link");
+
+        if (!accountLink) return;
+
+        if (session) {
+            accountLink.textContent = "My Account";
+        } else {
+            accountLink.textContent = "Account";
+        }
+    }
+
+    updateAccountLink();
+</script>
+
 </body>
 </html>

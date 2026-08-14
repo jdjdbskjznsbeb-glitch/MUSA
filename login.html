@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MUSA | Account</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f5f1eb;
+            font-family: Arial, sans-serif;
+            color: #1c1c1c;
+        }
+
+        .account-box {
+            width: min(90%, 400px);
+            padding: 40px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            text-align: center;
+            letter-spacing: 4px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #777;
+            margin-bottom: 30px;
+        }
+
+        input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 14px;
+            margin-bottom: 14px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: #1c1c1c;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        button.secondary {
+            background: #e8e2d9;
+            color: #1c1c1c;
+        }
+
+        #message,
+        #account-status {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="account-box">
+
+    <h1>MUSA</h1>
+
+    <div class="subtitle">Your MUSA account</div>
+
+    <input id="email" type="email" placeholder="Email address">
+
+    <input id="password" type="password" placeholder="Password">
+
+    <button onclick="signUp()">Create Account</button>
+
+    <button class="secondary" onclick="signIn()">Log In</button>
+
+    <div id="message"></div>
+
+    <div id="account-status"></div>
+
+    <button
+        id="logout-button"
+        class="secondary"
+        onclick="logOut()"
+        style="display:none;">
+        Log Out
+    </button>
+
+</div>
+
+<script>
+    const SUPABASE_URL = "https://gepjikjasfcwvrvdpzka.supabase.co";
+
+    const SUPABASE_KEY = "sb_publishable_qFY5eWE9M-g32a8uzKUNmA_Ea7R3Mxa";
+
+    const supabaseClient = supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+    async function signUp() {
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        const { error } = await supabaseClient.auth.signUp({
+            email: email,
+            password: password
+        });
+
+        document.getElementById("message").textContent =
+            error
+                ? error.message
+                : "Account created. Check your email to verify your account.";
+    }
+
+    async function signIn() {
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        const { error } =
+            await supabaseClient.auth.signInWithPassword({
+                email: email,
+                password: password
+            });
+
+        if (error) {
+    document.getElementById("message").textContent = error.message;
+} else {
+    document.getElementById("message").textContent =
+        "Logged in successfully!";
+
+    setTimeout(() => {
+        window.location.href = "index.html";
+    }, 500);
+}
+    }
+
+    async function checkSession() {
+        const { data: { session } } =
+            await supabaseClient.auth.getSession();
+
+        const status =
+            document.getElementById("account-status");
+
+        const logoutButton =
+            document.getElementById("logout-button");
+
+        if (session) {
+            status.textContent =
+                "Logged in as " + session.user.email;
+
+            logoutButton.style.display = "block";
+        } else {
+            status.textContent = "Not logged in";
+
+            logoutButton.style.display = "none";
+        }
+    }
+
+    async function logOut() {
+        const { error } =
+            await supabaseClient.auth.signOut();
+
+        if (error) {
+            document.getElementById("message").textContent =
+                error.message;
+            return;
+        }
+
+        document.getElementById("message").textContent =
+            "Logged out successfully.";
+
+        checkSession();
+    }
+
+    checkSession();
+</script>
+
+</body>
+</html>
